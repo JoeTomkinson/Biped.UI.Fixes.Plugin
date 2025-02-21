@@ -1,4 +1,4 @@
-# BipedWideScreenFix
+# Biped.UI.Fixes.Plugin
 
 **Updated plugin inspiration and updated based on the original Lyall BipedFix plugin**
 
@@ -159,6 +159,5 @@ This project is licensed under the [MIT License](LICENSE).
 - [BepinEx](https://github.com/BepInEx/BepInEx) is licensed under the GNU Lesser General Public License v2.1.
 
 - **Contributors:**  
- 
- 1) **Joe** – for the updated version and ongoing improvements.
- 2) **Andrew B** – for pointing me to the original version and still playing co-op games with me nearly a decade on.
+  Joe Tomkinson – for the updated version and ongoing improvements.
+  Andrew – for pointing me to the original version and still playing co-op games with me nearly a decade on.
