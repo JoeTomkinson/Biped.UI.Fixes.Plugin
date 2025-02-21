@@ -29,7 +29,9 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
    Visit the [BipedWideScreenFix GitHub releases page](https://github.com/JoeTomkinson/BipedWideScreenFix/releases) and download the latest release ZIP file.
 
 2. **Extract the Files**  
-   Extract the contents of the ZIP file into your game directory (e.g., `steamapps/common/Biped`). This ensures that the plugin DLL and related files are placed in the correct folder structure.
+   Extract the contents of the ZIP file into your game directory (e.g., `steamapps/common/Biped`). This ensures that the plugin DLL and related files are placed in the correct folder structure. 
+   
+	-  **Importnat Note** Do not use the 'Extract All' option on the Zip file as it'll put the files into a directory of the same name as the zip package.
 
 3. **Initial Run**  
    Launch the game once. This initial run allows BepInEx to load the plugin and automatically generate a configuration file at:
@@ -40,6 +42,11 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
 
 4. **Configuration**  
    Open the generated configuration file to adjust various settings—such as resolution, fullscreen mode, UI fixes, frame rate, and VSync—according to your system and preferences.
+
+
+## BiPed Version
+
+**Testing working with Biped version v5.4.23.1**
 
 ## Configuration Options
 
@@ -122,14 +129,14 @@ Once installed and configured, simply start the game. The plugin will automatica
 
 ## Changelog
 
-- **v1.1:**  
+- **v1.0.1:**  
   - Refactored configuration binding to occur in `Load()` rather than `Awake()`.
   - Converted computed configuration values into properties for dynamic recalculation.
   - Consolidated frame rate adjustments into a single helper method.
   - Added comprehensive error handling and logging for UI component adjustments.
   - Enhanced inline documentation and code clarity.
 
-- **v1.0:**  
+- **v1.0.0:**  
   - Initial release based on the original Lyall BipedFix plugin with basic ultra-wide support.
 
 ## License
