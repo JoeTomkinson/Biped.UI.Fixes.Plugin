@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<AssemblyName>Biped.UI.Fixes.Plugin.Mono</AssemblyName>
+		<Product>BiPed UI Fixes Plugin</Product>
+		<Version>1.0.1</Version>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<LangVersion>latest</LangVersion>
+		<RestoreAdditionalProjectSources>
+			https://api.nuget.org/v3/index.json;
+			https://nuget.bepinex.dev/v3/index.json;
+			https://nuget.samboy.dev/v3/index.json
+		</RestoreAdditionalProjectSources>
+		<RootNamespace>Biped.UI.Fixes.Plugin.Mono</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+		<PackageReference Include="BepInEx.Unity.Mono" Version="6.0.0-be.*" IncludeAssets="compile" />
+		<PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+		<PackageReference Include="UnityEngine.Modules" Version="2022.3.20" IncludeAssets="compile" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="packaging\releases\" />
+		<Folder Include="packaging\releases\raw\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>libs\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>libs\UnityEngine.UI.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="AfterBuildCustom" AfterTargets="Build">
+		<Message Text="AfterBuild target executing" Importance="high" />
+
+		<!-- Clean up the temporary folder -->
+		<RemoveDir Directories="$(SolutionDir)packaging\releases\raw" />
+		
+		<!-- Clean up any previous temporary extraction folder -->
+		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp" Condition="Exists('$(SolutionDir)packaging\releases\FinalTemp')" />
+
+		<!-- Ensure the ReleasePackage directory exists -->
+		<MakeDir Directories="$(SolutionDir)packaging\releases" />
+
+		<!-- Identify the BepInEx stable release zip file from your BepInExPackage folder -->
+		<ItemGroup>
+			<BepInExStableZip Include="$(SolutionDir)packaging\bepinex\*.zip" />
+		</ItemGroup>
+
+		<!-- Extract the stable BepInEx zip into a temporary folder -->
+		<Exec Command="powershell -Command &quot;Expand-Archive -Path '&quot;%(BepInExStableZip.Identity)&quot;' -DestinationPath '$(SolutionDir)packaging\releases\FinalTemp' -Force&quot;" />
+
+		<!-- Create the plugins folder under the extracted BepInEx directory -->
+		<MakeDir Directories="$(SolutionDir)packaging\releases\FinalTemp\BepInEx\plugins" />
+
+		<!-- Copy your built plugin DLL into the plugins folder -->
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SolutionDir)packaging\releases\FinalTemp\BepInEx\plugins" />
+
+		<!-- Copy your built plugin DLL into root for testing -->
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SolutionDir)packaging\releases\raw" />
+
+		<!-- Zip the entire extracted folder (preserving the top-level BepInEx folder) with version number appended -->
+		<Exec Command="powershell -Command &quot;Compress-Archive -Path '$(SolutionDir)packaging\releases\FinalTemp\*' -DestinationPath '$(SolutionDir)packaging\releases\BipedWideScreenFix-$(Version).zip' -Force&quot;" />
+
+		<!-- Clean up the temporary folder -->
+		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp" />
+	</Target>
+</Project>

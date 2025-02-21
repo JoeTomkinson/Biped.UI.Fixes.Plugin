@@ -2,9 +2,18 @@
 
 **Updated plugin inspiration and updated based on the original Lyall BipedFix plugin**
 
+## Version Details
+
+**Current Version: 1.0.1**
+
+- Unity Version: 2022.3.20
+- BiPed Version: 2.6
+- BepInEx - 6.0.0-be.697 - Biped
+- CLR runtime version: 4.0.30319.42000
+
 ## Overview
 
-BipedWideScreenFix is a plugin designed to enhance the visual experience of the game *Biped* on ultra-wide monitors. This updated version improves upon the original Lyall BipedFix plugin by incorporating modern .NET6 practices, dynamic configuration binding, and enhanced UI adjustments. The plugin ensures that screen resolution, aspect ratios, and UI elements are properly scaled and positioned, providing a seamless ultra-wide display experience.
+BipedWideScreenFix is a plugin designed to enhance the visual experience of the game *Biped* on ultra-wide monitors. This updated version improves upon the original Lyall BipedFix plugin by incorporating more modern .NET Standard 2.1 practices, dynamic configuration binding, and enhanced UI adjustments. The plugin ensures that screen resolution, aspect ratios, and UI elements are properly scaled and positioned, providing a seamless ultra-wide display experience.
 
 ## Features
 
@@ -20,8 +29,8 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
 - **Optimized Performance:**  
   Consolidates duplicate logic (e.g., frame rate management) using helper methods, ensuring cleaner and more maintainable code.
   
-- **Modern .NET6 and Unity Support:**  
-  Updated to target .NET6 and leverage current Unity functionalities, ensuring improved compatibility and performance.
+- **Targeting .Net Standard 2.1**  
+  Updated to target .NET Standard 2.1 and leverage current Unity functionalities, ensuring improved compatibility and performance.
 
 ## Installation
 
@@ -31,7 +40,7 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
 2. **Extract the Files**  
    Extract the contents of the ZIP file into your game directory (e.g., `steamapps/common/Biped`). This ensures that the plugin DLL and related files are placed in the correct folder structure. 
    
-	-  **Importnat Note** Do not use the 'Extract All' option on the Zip file as it'll put the files into a directory of the same name as the zip package.
+	-  **Important Note** Do not use the 'Extract All' option on the Zip file as it'll put the files into a directory of the same name as the zip package.
 
 3. **Initial Run**  
    Launch the game once. This initial run allows BepInEx to load the plugin and automatically generate a configuration file at:
@@ -45,16 +54,7 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
 
 ## BiPed Version
 
-### Testing working with Biped version:
-
-- Build ID: 16581518
-- App ID: 1071870
-
-#### This can be found by:
-
-1) Right clicking the game in your steam library and selecting properties. 
-2) Navigate to Updates Blade Tab.
-3) App ID and Build ID are on this page.
+Testing working with Biped version - v2.6
 
 ## Configuration Options
 
@@ -95,13 +95,13 @@ Once installed and configured, simply start the game. The plugin will automatica
 
 ## Differences from the Original Plugin
 
-### Initialization and Configuration Binding
+### Initialisation and Configuration Binding
 
 - **Original:**  
   Configuration values were bound in the `Awake()` method, using static fields that computed values only once.
   
 - **Updated:**  
-  The revised version binds configuration entries in the `Load()` method, which is more in line with modern BepInEx practices. Additionally, computed values (such as aspect ratio and multiplier) are now properties rather than static fields, ensuring that any change in configuration is immediately reflected without needing a restart.
+  The revised version binds configuration entries in the `Awake()` method and additionally, computed values (such as aspect ratio and multiplier) are now properties rather than static fields, ensuring that any change in configuration is immediately reflected without needing a restart.
 
 ### Code Structure and Maintainability
 
@@ -133,19 +133,20 @@ Once installed and configured, simply start the game. The plugin will automatica
   The plugin was built on an older framework and had static configurations.
   
 - **Updated:**  
-  Now targeting .NET6, leveraging modern C# features and best practices, which not only improves performance and compatibility with current Unity versions but also sets a foundation for easier future enhancements.
+  Now targeting .NET Standard 2.1, leveraging modern C# features and best practices, which not only improves performance and compatibility with current Unity versions but also sets a foundation for easier future enhancements.
 
 ## Changelog
 
-- **v1.0.1:**  
-  - Refactored configuration binding to occur in `Load()` rather than `Awake()`.
-  - Converted computed configuration values into properties for dynamic recalculation.
-  - Consolidated frame rate adjustments into a single helper method.
-  - Added comprehensive error handling and logging for UI component adjustments.
-  - Enhanced inline documentation and code clarity.
+- v1.0.0 - Initial Release
+- v1.0.1 - Updated to .NET Standard 2.1 and added additional configuration options. Added more detailed logging and error handling. Updated to target Unity Version 2022.3.20. Added updated game dlls for Biped version 2.6
 
-- **v1.0.0:**  
-  - Initial release based on the original Lyall BipedFix plugin with basic ultra-wide support.
+## Known Issues
+
+The below are some of the known issues that may occur when using the plugin; they specifically relate to the UI adjustments and screen resolution settings for the Main UI Screens.
+
+	[Warning:BiPed UI Fixes Plugin] AdjustLetterboxing
+	[Warning:BiPed UI Fixes Plugin] AdjustUIMask
+	[Warning:BiPed UI Fixes Plugin] CanvasScaler component not found on 'BipedGameUI'
 
 ## License
 
