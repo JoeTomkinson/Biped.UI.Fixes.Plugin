@@ -35,6 +35,17 @@ namespace BipedWideScreenFixPlugin
         {
             Log = base.Log;
             Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
+
+            // Bind configuration entries from the config file.
+            DesiredResolutionX = Config.Bind("General", "ResolutionWidth", (float)Display.main.systemWidth, "Set desired resolution width.");
+            DesiredResolutionY = Config.Bind("General", "ResolutionHeight", (float)Display.main.systemHeight, "Set desired resolution height.");
+            Fullscreen = Config.Bind("General", "Fullscreen", true, "Set to true for fullscreen or false for windowed.");
+            UIFixes = Config.Bind("Tweaks", "UIFixes", true, "Fixes user interface issues at wider than 16:9 aspect ratios.");
+            UnlockedFPS = Config.Bind("General", "UnlockedFPS", 120, "Set the desired framerate limit.");
+            ToggleVSync = Config.Bind("General", "EnableVSync", true, "Enable VSync");
+
+            // Patch methods using Harmony.
+            Harmony.CreateAndPatchAll(typeof(Patches));
         }
 
         /// <summary>
