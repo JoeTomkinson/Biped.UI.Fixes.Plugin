@@ -43,10 +43,18 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
 4. **Configuration**  
    Open the generated configuration file to adjust various settings—such as resolution, fullscreen mode, UI fixes, frame rate, and VSync—according to your system and preferences.
 
-
 ## BiPed Version
 
-**Testing working with Biped version v5.4.23.1**
+### Testing working with Biped version:
+
+- Build ID: 16581518
+- App ID: 1071870
+
+#### This can be found by:
+
+1) Right clicking the game in your steam library and selecting properties. 
+2) Navigate to Updates Blade Tab.
+3) App ID and Build ID are on this page.
 
 ## Configuration Options
 
@@ -146,8 +154,11 @@ This project is licensed under the [MIT License](LICENSE).
 ## Credits
 
 - **Original Plugin:**  
-  Thanks to Lyall for the original BipedFix plugin inspiration.
+  Thanks to Lyall for the original BipedFix plugin inspiration [found Here](https://github.com/Lyall/BipedFix).
   
+- [BepinEx](https://github.com/BepInEx/BepInEx) is licensed under the GNU Lesser General Public License v2.1.
+
 - **Contributors:**  
-  Joe Tomkinson – for the updated version and ongoing improvements.
-  Andrew – for pointing me to the original version and still playing co-op games with me nearly a decade on.
+ 
+ 1) **Joe** – for the updated version and ongoing improvements.
+ 2) **Andrew B** – for pointing me to the original version and still playing co-op games with me nearly a decade on.

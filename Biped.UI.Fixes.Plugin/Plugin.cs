@@ -6,7 +6,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BipedWideScreenFixPlugin
+namespace Biped.UI.Fixes.Plugin
 {
     /// <summary>
     /// BepInEx plugin that applies fixes to the game "Biped" to support ultra wide monitors.

@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<AssemblyName>BipedWideScreenFixPlugin</AssemblyName>
+		<AssemblyName>Biped.UI.Fixes.Plugin</AssemblyName>
 		<Product>Biped WideScreen Fix Plugin</Product>
 		<Version>1.0.1</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,7 +12,7 @@
 			https://nuget.bepinex.dev/v3/index.json;
 			https://nuget.samboy.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
-		<RootNamespace>BipedWideScreenFixPlugin</RootNamespace>
+		<RootNamespace>Biped.UI.Fixes.Plugin</RootNamespace>
 	</PropertyGroup>
 
 	<Target Name="AfterBuildCustom" AfterTargets="Build">
