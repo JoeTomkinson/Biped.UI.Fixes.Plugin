@@ -1,6 +1,6 @@
-# Biped.UI.Fixes.Plugin
+# Biped.UI.Fixes.Plugin.Mono
 
-**Updated plugin inspiration and updated based on the original Lyall BipedFix plugin**
+**Updated BiPed UI Fix Plugin - Inspiration and updated based on the original Lyall BipedFix plugin**
 
 ## Version Details
 
@@ -10,6 +10,7 @@
 - BiPed Version: 2.6
 - BepInEx - 6.0.0-be.697 - Biped
 - CLR runtime version: 4.0.30319.42000
+- Supports x64 (64 bit) and x86 (32 bit) versions of the game.
 
 ## Overview
 
@@ -35,7 +36,7 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
 ## Installation
 
 1. **Download the Plugin**  
-   Visit the [BipedWideScreenFix GitHub releases page](https://github.com/JoeTomkinson/BipedWideScreenFix/releases) and download the latest release ZIP file.
+   Visit the [BipedWideScreenFix GitHub releases page](https://github.com/JoeTomkinson/BipedWideScreenFix/releases) and download the latest release ZIP file for either x64 bit or x86 bit (32 bit) depending on what you're running the game on.
 
 2. **Extract the Files**  
    Extract the contents of the ZIP file into your game directory (e.g., `steamapps/common/Biped`). This ensures that the plugin DLL and related files are placed in the correct folder structure. 
@@ -46,15 +47,29 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
    Launch the game once. This initial run allows BepInEx to load the plugin and automatically generate a configuration file at:
 
    ``` c#
-   Biped/BepInEx/config/BipedWideScreenFix.cfg
+   Biped/BepInEx/config/Biped.UI.Fixes.Plugin.Mono.cfg
    ```
 
 4. **Configuration**  
    Open the generated configuration file to adjust various settings—such as resolution, fullscreen mode, UI fixes, frame rate, and VSync—according to your system and preferences.
 
-## BiPed Version
 
-Testing working with Biped version - v2.6
+### Debugging
+
+By default the debugging console is turned on in BepInEx, this will output to the BepInEx log file. If you're having issues with the plugin, please check the log file for any errors or issues.
+
+**If you would like to turn this off, follow the below instructions:**
+
+1. Navigate to 'Biped\BepInEx\config'
+2. Open up the 'BepInEx.cfg' file in NotePad or NotePad++ (Any text editor will work).
+3. Amend the following line to be 'false' if it's not already:
+   ```md
+    [Logging.Console]
+	## Enables showing a console for log output.
+	# Setting type: Boolean
+	# Default value: true
+	Enabled = false
+   ```
 
 ## Configuration Options
 
@@ -144,9 +159,7 @@ Once installed and configured, simply start the game. The plugin will automatica
 
 The below are some of the known issues that may occur when using the plugin; they specifically relate to the UI adjustments and screen resolution settings for the Main UI Screens.
 
-	[Warning:BiPed UI Fixes Plugin] AdjustLetterboxing
-	[Warning:BiPed UI Fixes Plugin] AdjustUIMask
-	[Warning:BiPed UI Fixes Plugin] CanvasScaler component not found on 'BipedGameUI'
+- **Main UI Screen:** The main UI screen may not be perfectly centered vertically on ultra-wide monitors. This is due to the game's UI design and the limitations of adjusting the screen resolution and UI elements. The plugin attempts to center the UI as best as possible, but some minor misalignment may still occur.
 
 ## License
 
@@ -160,5 +173,5 @@ This project is licensed under the [MIT License](LICENSE).
 - [BepinEx](https://github.com/BepInEx/BepInEx) is licensed under the GNU Lesser General Public License v2.1.
 
 - **Contributors:**  
-  Joe Tomkinson – for the updated version and ongoing improvements.
-  Andrew – for pointing me to the original version and still playing co-op games with me nearly a decade on.
+  
+  - Andrew – for pointing in the direction of the original version of the UI Fix Plugin and still playing co-op games with me nearly a decade on.
