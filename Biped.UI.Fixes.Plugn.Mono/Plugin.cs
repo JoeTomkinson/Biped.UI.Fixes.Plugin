@@ -3,7 +3,10 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using BepInEx.Unity.Mono;
 using HarmonyLib;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 namespace Biped.UI.Fixes.Plugin.Mono
@@ -149,24 +152,16 @@ namespace Biped.UI.Fixes.Plugin.Mono
             {
                 if (Plugin.UIFixes.Value)
                 {
-                    // Find the main game UI canvas and update its CanvasScaler reference resolution.
-                    GameObject canvasObj = GameObject.Find("BipedGameUI");
-                    if (canvasObj != null)
+                    var allCanvasScalerObjects = Resources.FindObjectsOfTypeAll<CanvasScaler>();
+                    // now find a canvas scaler with the name "GameMainUI"
+                    foreach (var go in allCanvasScalerObjects)
                     {
-                        CanvasScaler canvasScaler = canvasObj.GetComponent<CanvasScaler>();
-                        if (canvasScaler != null)
+                        if (go.name == "GameMainUI")
                         {
-                            canvasScaler.referenceResolution = NewReferenceResolution;
-                            Plugin.Logger.LogInfo($"Game UI reference resolution updated to {canvasScaler.referenceResolution}");
+                            Plugin.Logger.LogInfo($"Found GameMainUI");
+                            go.referenceResolution = NewReferenceResolution;
+                            Plugin.Logger.LogInfo($"Game UI reference resolution updated to {go.referenceResolution}");
                         }
-                        else
-                        {
-                            Plugin.Logger.LogWarning("UpdateGameMainUIReferenceResolution - CanvasScaler component not found on 'BipedGameUI'");
-                        }
-                    }
-                    else
-                    {
-                        Plugin.Logger.LogWarning("UpdateGameMainUIReferenceResolution - 'BipedGameUI' GameObject not found");
                     }
                 }
             }
@@ -203,65 +198,82 @@ namespace Biped.UI.Fixes.Plugin.Mono
                 }
             }
 
-            /// <summary>
-            /// Adjusts the cinematic letterboxing scale to fit ultra wide displays.
-            /// </summary>
             [HarmonyPatch(typeof(Biped.BipedGameUI), "Awake")]
             [HarmonyPostfix]
-            public static void AdjustLetterboxing()
+            public static void AdjustGameUI()
             {
                 if (Plugin.UIFixes.Value)
                 {
-                    // Find the cinematic UI and scale its letterbox based on the aspect multiplier.
-                    GameObject cinematicObj = GameObject.Find("BipedGameUI/GamingUICoopMode/CinematicUI");
-                    if (cinematicObj != null)
+                    // Grab all of the RectTransform objects in the scene.
+                    var allRectTransformObjects = Resources.FindObjectsOfTypeAll<RectTransform>();
+
+                    // Define the target names. 
+                    string cinematicUIName = "CinematicUI";
+                    string uIMaskName = "UI_Mask";
+
+                    foreach (var go in allRectTransformObjects)
                     {
-                        RectTransform cinematicRect = cinematicObj.GetComponent<RectTransform>();
-                        if (cinematicRect != null)
+                        if (go.name == cinematicUIName)
                         {
-                            cinematicRect.localScale = new Vector3(AspectMultiplier, 1, 1);
-                            Plugin.Logger.LogInfo($"Cinematic UI local scale updated to {cinematicRect.localScale}");
+                            Plugin.Logger.LogInfo($"Found RectTransform target: {go.name} at path: {GetRectTransformPath(go)}");
+                            AdjustLetterboxing(go);
                         }
-                        else
+
+                        if (go.name == uIMaskName)
                         {
-                            Plugin.Logger.LogWarning("AdjustLetterboxing - RectTransform component not found on 'CinematicUI'");
+                            Plugin.Logger.LogInfo($"Found RectTransform target: {go.name} at path: {GetRectTransformPath(go)}");
+                            AdjustUIMask(go);
                         }
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Adjusts the cinematic letterboxing scale to fit ultra wide displays.
+            /// </summary>
+            public static void AdjustLetterboxing(RectTransform cinematicObj)
+            {
+                if (cinematicObj != null)
+                {
+                    RectTransform cinematicRect = cinematicObj.GetComponent<RectTransform>();
+                    if (cinematicRect != null)
+                    {
+                        Plugin.Logger.LogInfo("AdjustLetterboxing - CinematicUI Object Found.");
+                        cinematicRect.localScale = new Vector3(1 * AspectMultiplier, 1, 1);
+                        Plugin.Logger.LogInfo($"Cinematic UI local scale updated to {cinematicRect.localScale}");
                     }
                     else
                     {
-                        Plugin.Logger.LogWarning("AdjustLetterboxing - 'CinematicUI' GameObject not found");
+                        Plugin.Logger.LogWarning("AdjustLetterboxing - RectTransform component not found on 'CinematicUI'");
                     }
+                }
+                else
+                {
+                    Plugin.Logger.LogWarning("AdjustLetterboxing - 'CinematicUI' GameObject not found");
                 }
             }
 
             /// <summary>
             /// Adjusts the UI mask scale for ultra wide monitors.
             /// </summary>
-            [HarmonyPatch(typeof(Biped.BipedGameUI), "Awake")]
-            [HarmonyPostfix]
-            public static void AdjustUIMask()
+            public static void AdjustUIMask(RectTransform maskObj)
             {
-                if (Plugin.UIFixes.Value)
+                if (maskObj != null)
                 {
-                    // Find the UI mask and update its scale based on the aspect multiplier.
-                    GameObject maskObj = GameObject.Find("BipedGameUI/GamingUICoopMode/UI_Mask");
-                    if (maskObj != null)
+                    RectTransform maskRect = maskObj.GetComponent<RectTransform>();
+                    if (maskRect != null)
                     {
-                        RectTransform maskRect = maskObj.GetComponent<RectTransform>();
-                        if (maskRect != null)
-                        {
-                            maskRect.localScale = new Vector3(AspectMultiplier, 1, 1);
-                            Plugin.Logger.LogInfo($"UI mask local scale updated to {maskRect.localScale}");
-                        }
-                        else
-                        {
-                            Plugin.Logger.LogWarning("AdjustUIMask - RectTransform component not found on 'UI_Mask'");
-                        }
+                        maskRect.localScale = new Vector3(1 * AspectMultiplier, 1, 1);
+                        Plugin.Logger.LogInfo($"UI mask local scale updated to {maskRect.localScale}");
                     }
                     else
                     {
-                        Plugin.Logger.LogWarning("AdjustUIMask - 'UI_Mask' GameObject not found");
+                        Plugin.Logger.LogWarning("AdjustUIMask - RectTransform component not found on 'UI_Mask'");
                     }
+                }
+                else
+                {
+                    Plugin.Logger.LogWarning("AdjustUIMask - 'UI_Mask' GameObject not found");
                 }
             }
 
@@ -325,6 +337,23 @@ namespace Biped.UI.Fixes.Plugin.Mono
                         Plugin.Logger.LogWarning("'GameMainUI/VideoUI/Player' GameObject not found");
                     }
                 }
+            }
+
+            /// <summary>
+            /// Helper method to retrieve the full hierarchy path of a GameObject.
+            /// </summary>
+            /// <param name="obj">The GameObject whose path is desired.</param>
+            /// <returns>A string representing the full path in the scene hierarchy.</returns>
+            private static string GetRectTransformPath(RectTransform obj)
+            {
+                string path = obj.name;
+                Transform current = obj.transform.parent;
+                while (current != null)
+                {
+                    path = current.name + "/" + path;
+                    current = current.parent;
+                }
+                return path;
             }
         }
     }

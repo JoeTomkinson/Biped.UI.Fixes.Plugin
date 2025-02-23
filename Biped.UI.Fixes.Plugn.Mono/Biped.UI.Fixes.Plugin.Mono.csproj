@@ -28,7 +28,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="packaging\releases\" />
+		<Folder Include="packaging\releases\raw\" />
+		<Folder Include="packaging\releases\raw\x64\" />
 	</ItemGroup>
 
 	<ItemGroup>
