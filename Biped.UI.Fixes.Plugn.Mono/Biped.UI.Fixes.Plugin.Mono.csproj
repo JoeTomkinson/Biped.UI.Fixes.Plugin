@@ -13,6 +13,7 @@
 			https://nuget.samboy.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
 		<RootNamespace>Biped.UI.Fixes.Plugin.Mono</RootNamespace>
+		<Platforms>AnyCPU;x64;x86</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -28,7 +29,6 @@
 
 	<ItemGroup>
 		<Folder Include="packaging\releases\" />
-		<Folder Include="packaging\releases\raw\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -40,39 +40,61 @@
 		</Reference>
 	</ItemGroup>
 
-	<Target Name="AfterBuildCustom" AfterTargets="Build">
-		<Message Text="AfterBuild target executing" Importance="high" />
+	<Target Name="AfterBuildCustom_x86" AfterTargets="Build" Condition="'$(Platform)'=='x86'">
+		<Message Text="AfterBuild target executing for x896" Importance="high" />
 
-		<!-- Clean up the temporary folder -->
-		<RemoveDir Directories="$(SolutionDir)packaging\releases\raw" />
-		
-		<!-- Clean up any previous temporary extraction folder -->
-		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp" Condition="Exists('$(SolutionDir)packaging\releases\FinalTemp')" />
+		<MakeDir Directories="$(SolutionDir)packaging\releases\raw\x86" />
 
-		<!-- Ensure the ReleasePackage directory exists -->
-		<MakeDir Directories="$(SolutionDir)packaging\releases" />
 
-		<!-- Identify the BepInEx stable release zip file from your BepInExPackage folder -->
+		<!-- Clean up any previous temporary extraction folders -->
+		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp32" Condition="Exists('$(SolutionDir)packaging\releases\FinalTemp32')" />
+
+		<!-- Process 32-bit release package -->
+		<Message Text="Packaging 32-bit release" Importance="high" />
+		<!-- Identify the 32-bit BepInEx stable zip -->
 		<ItemGroup>
-			<BepInExStableZip Include="$(SolutionDir)packaging\bepinex\*.zip" />
+			<BepInExStableZip32 Include="$(SolutionDir)packaging\bepinex\32bit\*.zip" />
 		</ItemGroup>
-
-		<!-- Extract the stable BepInEx zip into a temporary folder -->
-		<Exec Command="powershell -Command &quot;Expand-Archive -Path '&quot;%(BepInExStableZip.Identity)&quot;' -DestinationPath '$(SolutionDir)packaging\releases\FinalTemp' -Force&quot;" />
-
+		<!-- Extract the 32-bit stable zip into a temporary folder -->
+		<Exec Command="powershell -Command &quot;Expand-Archive -Path '&quot;%(BepInExStableZip32.Identity)&quot;' -DestinationPath '$(SolutionDir)packaging\releases\FinalTemp32' -Force&quot;" />
 		<!-- Create the plugins folder under the extracted BepInEx directory -->
-		<MakeDir Directories="$(SolutionDir)packaging\releases\FinalTemp\BepInEx\plugins" />
-
-		<!-- Copy your built plugin DLL into the plugins folder -->
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SolutionDir)packaging\releases\FinalTemp\BepInEx\plugins" />
-
-		<!-- Copy your built plugin DLL into root for testing -->
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SolutionDir)packaging\releases\raw" />
-
-		<!-- Zip the entire extracted folder (preserving the top-level BepInEx folder) with version number appended -->
-		<Exec Command="powershell -Command &quot;Compress-Archive -Path '$(SolutionDir)packaging\releases\FinalTemp\*' -DestinationPath '$(SolutionDir)packaging\releases\BipedWideScreenFix-$(Version).zip' -Force&quot;" />
-
-		<!-- Clean up the temporary folder -->
-		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp" />
+		<MakeDir Directories="$(SolutionDir)packaging\releases\FinalTemp32\BepInEx\plugins" />
+		<!-- Copy the built 32-bit plugin DLL into the plugins folder -->
+		<Copy SourceFiles="$(SolutionDir)bin\x86\Release\netstandard2.1\$(TargetFileName)" DestinationFolder="$(SolutionDir)packaging\releases\FinalTemp32\BepInEx\plugins" />
+		<!-- Also copy the raw 32-bit DLL for reference -->
+		<Copy SourceFiles="$(SolutionDir)bin\x86\Release\netstandard2.1\$(TargetFileName)" DestinationFolder="$(SolutionDir)packaging\releases\raw\x86" />
+		<!-- Zip the entire extracted folder (preserving the top-level BepInEx folder) with version and architecture appended -->
+		<Exec Command="powershell -Command &quot;Compress-Archive -Path '$(SolutionDir)packaging\releases\FinalTemp32\*' -DestinationPath '$(SolutionDir)packaging\releases\BipedWideScreenFix-$(Version)-x86.zip' -Force&quot;" />
+		<!-- Clean up the temporary folder for 32-bit -->
+		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp32" />
 	</Target>
+
+	<Target Name="AfterBuildCustom_x64" AfterTargets="Build" Condition="'$(Platform)'=='x64'">
+		<Message Text="AfterBuild target executing for x64" Importance="high" />
+
+		<MakeDir Directories="$(SolutionDir)packaging\releases\raw\x64" />
+
+		<!-- Clean up any previous temporary extraction folders -->
+		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp64" Condition="Exists('$(SolutionDir)packaging\releases\FinalTemp64')" />
+
+		<!-- Process 64-bit release package -->
+		<Message Text="Packaging 64-bit release" Importance="high" />
+		<!-- Identify the 64-bit BepInEx stable zip -->
+		<ItemGroup>
+			<BepInExStableZip64 Include="$(SolutionDir)packaging\bepinex\64bit\*.zip" />
+		</ItemGroup>
+		<!-- Extract the 64-bit stable zip into a temporary folder -->
+		<Exec Command="powershell -Command &quot;Expand-Archive -Path '&quot;%(BepInExStableZip64.Identity)&quot;' -DestinationPath '$(SolutionDir)packaging\releases\FinalTemp64' -Force&quot;" />
+		<!-- Create the plugins folder under the extracted BepInEx directory -->
+		<MakeDir Directories="$(SolutionDir)packaging\releases\FinalTemp64\BepInEx\plugins" />
+		<!-- Copy the built 64-bit plugin DLL into the plugins folder -->
+		<Copy SourceFiles="$(SolutionDir)bin\x64\Release\netstandard2.1\$(TargetFileName)" DestinationFolder="$(SolutionDir)packaging\releases\FinalTemp64\BepInEx\plugins" />
+		<!-- Also copy the raw 64-bit DLL for reference -->
+		<Copy SourceFiles="$(SolutionDir)bin\x64\Release\netstandard2.1\$(TargetFileName)" DestinationFolder="$(SolutionDir)packaging\releases\raw\x64" />
+		<!-- Zip the entire extracted folder (preserving the top-level BepInEx folder) with version and architecture appended -->
+		<Exec Command="powershell -Command &quot;Compress-Archive -Path '$(SolutionDir)packaging\releases\FinalTemp64\*' -DestinationPath '$(SolutionDir)packaging\releases\BipedWideScreenFix-$(Version)-x64.zip' -Force&quot;" />
+		<!-- Clean up the temporary folder for 64-bit -->
+		<RemoveDir Directories="$(SolutionDir)packaging\releases\FinalTemp64" />
+	</Target>
+
 </Project>
