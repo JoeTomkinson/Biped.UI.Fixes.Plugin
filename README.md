@@ -2,6 +2,8 @@
 
 **Updated BiPed UI Fix Plugin - Inspiration and updated based on the original Lyall BipedFix plugin**
 
+![biped ui fix](https://github.com/user-attachments/assets/df34ffcd-3d1f-4b93-a292-da2e8ba73710)
+
 ## Version Details
 
 **Current Version: 1.0.1**
