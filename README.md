@@ -1,6 +1,6 @@
 # Biped.UI.Fixes.Plugin.Mono
 
-**Updated BiPed UI Fix Plugin - Inspiration and updated based on the original Lyall BipedFix plugin**
+**Updated Biped UI Fix Plugin - Inspiration and updated based on the original Lyall BipedFix plugin**
 
 ![biped ui fix](https://github.com/user-attachments/assets/df34ffcd-3d1f-4b93-a292-da2e8ba73710)
 
@@ -9,8 +9,8 @@
 **Current Version: 1.0.1**
 
 - Unity Version: 2022.3.20
-- BiPed Version: 2.6
-- BepInEx - 6.0.0-be.697 - Biped
+- Biped Version: 2.6
+- BepInEx - 6.0.0-be.697
 - CLR runtime version: 4.0.30319.42000
 - Supports x64 (64 bit) and x86 (32 bit) versions of the game.
 
