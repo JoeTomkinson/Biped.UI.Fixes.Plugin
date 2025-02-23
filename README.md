@@ -1,4 +1,5 @@
 # Biped.UI.Fixes.Plugin.Mono
+[![Github All Releases](https://img.shields.io/github/downloads/JoeTomkinson/Biped.UI.Fixes.Plugin/total.svg)]()
 
 **Updated Biped UI Fix Plugin - Inspiration and updated based on the original Lyall BipedFix plugin**
 
