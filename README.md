@@ -42,18 +42,21 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
    Visit the [BipedWideScreenFix GitHub releases page](https://github.com/JoeTomkinson/BipedWideScreenFix/releases) and download the latest release ZIP file for either x64 bit or x86 bit (32 bit) depending on what you're running the game on.
 
 2. **Extract the Files**  
-   Extract the contents of the ZIP file into your game directory (e.g., `steamapps/common/Biped`). This ensures that the plugin DLL and related files are placed in the correct folder structure. 
-   
-	-  **Important Note** Do not use the 'Extract All' option on the Zip file as it'll put the files into a directory of the same name as the zip package.
+   Extract the contents of the ZIP file into your game directory (e.g., `steamapps/common/Biped`). This ensures that the plugin DLL and related files are placed in the correct folder structure.
 
-3. **Initial Run**  
+   -  **Important Note** Do not use the 'Extract All' option on the Zip file as it'll put the files into a directory of the same name as the zip package.
+   -  The Directory **should look like this** if extracted properly:
+  
+     ![image](https://github.com/user-attachments/assets/5fc38171-1208-431c-8e4f-530162d13ca8)
+
+4. **Initial Run**  
    Launch the game once. This initial run allows BepInEx to load the plugin and automatically generate a configuration file at:
 
    ``` c#
    Biped/BepInEx/config/Biped.UI.Fixes.Plugin.Mono.cfg
    ```
 
-4. **Configuration**  
+5. **Configuration**  
    Open the generated configuration file to adjust various settings—such as resolution, fullscreen mode, UI fixes, frame rate, and VSync—according to your system and preferences.
 
 
