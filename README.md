@@ -34,7 +34,7 @@ BipedWideScreenFix is a plugin designed to enhance the visual experience of the 
   Consolidates duplicate logic (e.g., frame rate management) using helper methods, ensuring cleaner and more maintainable code.
   
 - **Targeting .Net Standard 2.1**  
-  Updated to target .NET Standard 2.1 and leverage current Unity functionalities, ensuring improved compatibility and performance.
+  Updated to target `.NET Standard 2.1` and leverage current Unity functionalities, ensuring improved compatibility and performance.
 
 ## Installation
 
@@ -66,9 +66,10 @@ By default the debugging console is turned on in BepInEx, this will output to th
 
 **If you would like to turn this off, follow the below instructions:**
 
-1. Navigate to 'Biped\BepInEx\config'
-2. Open up the 'BepInEx.cfg' file in NotePad or NotePad++ (Any text editor will work).
-3. Amend the following line to be 'false' if it's not already:
+1. Navigate to `'Biped\BepInEx\config'`
+2. Open up the `'BepInEx.cfg'` file in NotePad or NotePad++ (Any text editor will work).
+3. Amend the following line to be `'false'` if it's not already:
+   
    ```md
     [Logging.Console]
 	## Enables showing a console for log output.
