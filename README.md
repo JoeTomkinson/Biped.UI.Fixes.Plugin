@@ -181,4 +181,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 - **Contributors:**  
   
-  - Andrew – for pointing in the direction of the original version of the UI Fix Plugin and still playing co-op games with me nearly a decade on.
+  - Andrew – for pointing me in the direction of the original version of the UI Fix Plugin and still playing co-op games with me nearly a decade on.
