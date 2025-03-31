@@ -3,7 +3,7 @@
 
 **Updated Biped UI Fix Plugin - Inspiration and updated based on the original Lyall BipedFix plugin**
 
-![biped ui fix](https://github.com/user-attachments/assets/df34ffcd-3d1f-4b93-a292-da2e8ba73710)
+![biped ui fix](https://github.com/user-attachments/assets/e07eace0-4722-443b-9a05-e51f77065d90)
 
 ## Version Details
 
