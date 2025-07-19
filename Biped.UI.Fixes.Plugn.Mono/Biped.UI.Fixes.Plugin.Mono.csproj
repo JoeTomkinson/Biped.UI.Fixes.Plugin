@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<AssemblyName>Biped.UI.Fixes.Plugin.Mono</AssemblyName>
 		<Product>BiPed UI Fixes Plugin</Product>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<RestoreAdditionalProjectSources>
@@ -30,6 +30,7 @@
 	<ItemGroup>
 		<Folder Include="packaging\releases\raw\" />
 		<Folder Include="packaging\releases\raw\x64\" />
+		<Folder Include="packaging\releases\raw\x86\" />
 	</ItemGroup>
 
 	<ItemGroup>
